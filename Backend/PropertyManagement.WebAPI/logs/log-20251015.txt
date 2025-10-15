@@ -1,0 +1,9 @@
+2025-10-15 10:09:54.506 -04:00 [ERR] Failed executing DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "Hosts" (
+    "Id" uuid NOT NULL,
+    "Name" character varying(200) NOT NULL,
+    "Email" character varying(200) NOT NULL,
+    "Phone" character varying(20) NOT NULL,
+    "CreatedAt" timestamp with time zone NOT NULL DEFAULT (GETUTCDATE()),
+    CONSTRAINT "PK_Hosts" PRIMARY KEY ("Id")
+);

@@ -1,0 +1,55 @@
+# Ignore all obj directories
+**/obj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.dll
+*.
+**/ContentRaw/
+**/.vscode/
+**/vscode/
+.vscode/
+*.vscode
+
+
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bin/
+obj/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Others
+*.db
+*.bak
+*.swp
+*.swo
+*.pdb
+*.mdb
+*.scc
+
+# Rider
+.idea/
+*.sln.iml
+
+# Git stage files
+*.stage
+*.staged
+.vscode/settings.json
+
