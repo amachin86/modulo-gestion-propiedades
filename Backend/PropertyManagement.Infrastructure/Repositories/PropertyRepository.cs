@@ -9,7 +9,7 @@ public class PropertyRepository : Repository<Property>, IPropertyRepository
 {
     public PropertyRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task<IEnumerable<Property>> GetPropertiesByHostIdAsync(Guid hostId)
+    public async Task<IEnumerable<Property>> GetPropertiesByHostIdAsync(int hostId)
     {
         return await _context.Properties
             .Where(p => p.HostId == hostId)
@@ -19,7 +19,7 @@ public class PropertyRepository : Repository<Property>, IPropertyRepository
 
     public async Task<IEnumerable<Property>> GetPropertiesWithFiltersAsync(
         string? name,
-        Guid? hostId,
+        int? hostId,
         string? status,
         int pageNumber,
         int pageSize)
@@ -48,7 +48,7 @@ public class PropertyRepository : Repository<Property>, IPropertyRepository
             .ToListAsync();
     }
 
-    public async Task<int> GetTotalPropertiesCountAsync(string? name, Guid? hostId, string? status)
+    public async Task<int> GetTotalPropertiesCountAsync(string? name, int? hostId, string? status)
     {
         var query = _context.Properties.AsQueryable();
 

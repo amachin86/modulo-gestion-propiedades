@@ -20,19 +20,18 @@ public class UpdatePropertyCommandHandler : IRequestHandler<UpdatePropertyComman
 
     public async Task<PropertyDto> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
     {
-        var property = await _unitOfWork.Repository<Property>().GetByIdAsync(request.Id);
+        var propertyRepository = _unitOfWork.Repository<Property>();
+        var property = await propertyRepository.GetByIdAsync(request.Id);
+
         if (property == null)
         {
-            throw new KeyNotFoundException($"Property with ID {request.Id} not found");
+            throw new KeyNotFoundException($"Property with ID {request.Id} not found.");
         }
 
-        property.Name = request.Name;
-        property.Description = request.Description;
-        property.HostId = request.HostId;
-        property.Status = request.Status;
+        _mapper.Map(request.Property, property);
         property.UpdatedAt = DateTime.UtcNow;
 
-        _unitOfWork.Repository<Property>().Update(property);
+        propertyRepository.Update(property);
         await _unitOfWork.SaveChangesAsync();
 
         return _mapper.Map<PropertyDto>(property);

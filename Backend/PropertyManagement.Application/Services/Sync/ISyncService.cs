@@ -2,5 +2,5 @@ namespace PropertyManagement.Application.Services.Sync;
 
 public interface ISyncService
 {
-    Task SyncPropertyAsync(Guid propertyId, string action);
+    Task SyncPropertyAsync(int propertyId, string action);
 }

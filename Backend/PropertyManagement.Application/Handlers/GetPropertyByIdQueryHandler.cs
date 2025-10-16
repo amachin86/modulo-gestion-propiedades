@@ -7,7 +7,7 @@ using PropertyManagement.Domain.Interfaces;
 
 namespace PropertyManagement.Application.Handlers;
 
-public class GetPropertyByIdQueryHandler : IRequestHandler<GetPropertyByIdQuery, PropertyDto?>
+public class GetPropertyByIdQueryHandler : IRequestHandler<GetPropertyByIdQuery, PropertyDto>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -18,9 +18,16 @@ public class GetPropertyByIdQueryHandler : IRequestHandler<GetPropertyByIdQuery,
         _mapper = mapper;
     }
 
-    public async Task<PropertyDto?> Handle(GetPropertyByIdQuery request, CancellationToken cancellationToken)
+    public async Task<PropertyDto> Handle(GetPropertyByIdQuery request, CancellationToken cancellationToken)
     {
-        var property = await _unitOfWork.Repository<Property>().GetByIdAsync(request.Id);
-        return property == null ? null : _mapper.Map<PropertyDto>(property);
+        var propertyRepository = _unitOfWork.Repository<Property>();
+        var property = await propertyRepository.GetByIdAsync(request.Id);
+
+        if (property == null)
+        {
+            throw new KeyNotFoundException($"Property with ID {request.Id} not found.");
+        }
+
+        return _mapper.Map<PropertyDto>(property);
     }
 }

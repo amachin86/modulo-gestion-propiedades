@@ -1,31 +1,38 @@
+using AutoMapper;
 using MediatR;
 using PropertyManagement.Application.Commands;
+using PropertyManagement.Application.DTOs;
 using PropertyManagement.Domain.Entities;
 using PropertyManagement.Domain.Interfaces;
 
 namespace PropertyManagement.Application.Handlers;
 
-public class SyncPropertyCommandHandler : IRequestHandler<SyncPropertyCommand, Unit>
+public class SyncPropertyCommandHandler : IRequestHandler<SyncPropertyCommand, DomainEventDto>
 {
-    private readonly IDomainEventRepository _domainEventRepository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public SyncPropertyCommandHandler(IDomainEventRepository domainEventRepository)
+    public SyncPropertyCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _domainEventRepository = domainEventRepository;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(SyncPropertyCommand request, CancellationToken cancellationToken)
+    public async Task<DomainEventDto> Handle(SyncPropertyCommand request, CancellationToken cancellationToken)
     {
         var domainEvent = new DomainEvent
         {
             PropertyId = request.PropertyId,
-            EventType = $"OTA_Sync_{request.OTAType}",
-            EventData = $"{{\"action\":\"{request.Action}\",\"ota\":\"{request.OTAType}\"}}",
-            OccurredAt = DateTime.UtcNow
+            EventType = request.Action,
+            OccurredAt = DateTime.UtcNow,
+            EventData = string.Empty, // No details in this command
+            CreatedAt = DateTime.UtcNow
         };
 
-        await _domainEventRepository.AddAsync(domainEvent);
+        var domainEventRepository = _unitOfWork.Repository<DomainEvent>();
+        await domainEventRepository.AddAsync(domainEvent);
+        await _unitOfWork.SaveChangesAsync();
 
-        return Unit.Value;
+        return _mapper.Map<DomainEventDto>(domainEvent);
     }
 }

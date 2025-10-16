@@ -20,15 +20,13 @@ public class CreatePropertyCommandHandler : IRequestHandler<CreatePropertyComman
 
     public async Task<PropertyDto> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
     {
-        var property = new Property
-        {
-            Name = request.Name,
-            Description = request.Description,
-            HostId = request.HostId,
-            Status = request.Status
-        };
+        var property = _mapper.Map<Property>(request.Property);
+        property.CreatedAt = DateTime.UtcNow;
+        property.UpdatedAt = DateTime.UtcNow;
+        property.Status = "Active";
 
-        await _unitOfWork.Repository<Property>().AddAsync(property);
+        var propertyRepository = _unitOfWork.Repository<Property>();
+        await propertyRepository.AddAsync(property);
         await _unitOfWork.SaveChangesAsync();
 
         return _mapper.Map<PropertyDto>(property);

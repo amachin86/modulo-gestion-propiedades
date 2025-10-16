@@ -53,7 +53,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthRespo
         return new AuthResponseDto
         {
             Token = token,
-            Expiration = DateTime.Now.AddHours(1),
+            ExpiresAt = DateTime.Now.AddHours(1),
             Username = user.Username,
             Role = user.Role
         };

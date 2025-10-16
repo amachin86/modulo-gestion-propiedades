@@ -1,10 +1,10 @@
 using MediatR;
+using PropertyManagement.Application.DTOs;
 
 namespace PropertyManagement.Application.Commands;
 
-public class SyncPropertyCommand : IRequest<Unit>
+public class SyncPropertyCommand : IRequest<DomainEventDto>
 {
-    public Guid PropertyId { get; set; }
-    public string OTAType { get; set; } = string.Empty; // Airbnb, Booking, etc.
-    public string Action { get; set; } = string.Empty; // Sync, Update, etc.
+    public int PropertyId { get; set; }
+    public string Action { get; set; } = string.Empty;
 }

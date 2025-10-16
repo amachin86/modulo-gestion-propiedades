@@ -4,5 +4,5 @@ namespace PropertyManagement.Application.Commands;
 
 public class DeletePropertyCommand : IRequest<Unit>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }

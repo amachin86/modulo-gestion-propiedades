@@ -1,60 +1,69 @@
+using AutoMapper;
 using MediatR;
 using PropertyManagement.Application.Commands;
 using PropertyManagement.Application.DTOs;
 using PropertyManagement.Application.Queries;
+using PropertyManagement.Domain.Entities;
+using PropertyManagement.Domain.Interfaces;
 
 namespace PropertyManagement.Application.Services.Properties;
 
 public class PropertyService : IPropertyService
 {
     private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
 
-    public PropertyService(IMediator mediator)
+    public PropertyService(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
-    public async Task<PropertyDto> CreatePropertyAsync(CreatePropertyDto createPropertyDto)
+    public async Task<IEnumerable<PropertyDto>> GetPropertiesAsync(string? name = null, int? hostId = null, string? status = null, int pageNumber = 1, int pageSize = 10)
     {
-        var command = new CreatePropertyCommand
+        var query = new GetPropertiesQuery
         {
-            Name = createPropertyDto.Name,
-            Description = createPropertyDto.Description,
-            HostId = createPropertyDto.HostId,
-            Status = createPropertyDto.Status
+            Name = name,
+            HostId = hostId,
+            Status = status,
+            PageNumber = pageNumber,
+            PageSize = pageSize
         };
 
-        return await _mediator.Send(command);
+        return await _mediator.Send(query);
     }
 
-    public async Task<PropertyDto> UpdatePropertyAsync(Guid id, UpdatePropertyDto updatePropertyDto)
-    {
-        var command = new UpdatePropertyCommand
-        {
-            Id = id,
-            Name = updatePropertyDto.Name,
-            Description = updatePropertyDto.Description,
-            Status = updatePropertyDto.Status
-        };
-
-        return await _mediator.Send(command);
-    }
-
-    public async Task DeletePropertyAsync(Guid id)
-    {
-        var command = new DeletePropertyCommand { Id = id };
-        await _mediator.Send(command);
-    }
-
-    public async Task<PropertyDto> GetPropertyByIdAsync(Guid id)
+    public async Task<PropertyDto> GetPropertyByIdAsync(int id)
     {
         var query = new GetPropertyByIdQuery { Id = id };
         return await _mediator.Send(query);
     }
 
-    public async Task<IEnumerable<PropertyDto>> GetAllPropertiesAsync()
+    public async Task<PropertyDto> CreatePropertyAsync(CreatePropertyDto createPropertyDto)
     {
-        var query = new GetPropertiesQuery();
-        return await _mediator.Send(query);
+        var command = new CreatePropertyCommand { Property = createPropertyDto };
+        return await _mediator.Send(command);
+    }
+
+    public async Task<PropertyDto> UpdatePropertyAsync(int id, UpdatePropertyDto updatePropertyDto)
+    {
+        var command = new UpdatePropertyCommand { Id = id, Property = updatePropertyDto };
+        return await _mediator.Send(command);
+    }
+
+    public async Task DeletePropertyAsync(int id)
+    {
+        var command = new DeletePropertyCommand { Id = id };
+        await _mediator.Send(command);
+    }
+
+    public async Task<DomainEventDto> SyncPropertyAsync(SyncDto syncDto)
+    {
+        var command = new SyncPropertyCommand
+        {
+            PropertyId = syncDto.PropertyId,
+            Action = syncDto.Action
+        };
+        return await _mediator.Send(command);
     }
 }

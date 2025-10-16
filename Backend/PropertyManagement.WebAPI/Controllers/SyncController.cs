@@ -17,7 +17,7 @@ public class SyncController : ControllerBase
     }
 
     [HttpPost("ota")]
-    public async Task<IActionResult> SyncOTA([FromQuery] Guid propertyId, [FromQuery] string action)
+    public async Task<IActionResult> SyncOTA([FromQuery] int propertyId, [FromQuery] string action)
     {
         await _syncService.SyncPropertyAsync(propertyId, action);
         return Ok(new { message = "Sync event registered successfully" });

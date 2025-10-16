@@ -5,21 +5,11 @@ namespace PropertyManagement.Domain.Entities;
 
 public class DomainEvent
 {
-    [Key]
-    public Guid Id { get; set; }
-
-    [Required]
-    public Guid PropertyId { get; set; }
-
-    [ForeignKey(nameof(PropertyId))]
-    public Property Property { get; set; } = null!;
-
-    [Required]
-    [MaxLength(100)]
-    public string EventType { get; set; } = string.Empty; // SyncWithOTA, etc.
-
-    [MaxLength(1000)]
-    public string EventData { get; set; } = string.Empty; // JSON data
-
+    public int Id { get; set; }
+    public int PropertyId { get; set; }
+    public string EventType { get; set; } = null!;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string EventData { get; set; } = null!;
     public DateTime OccurredAt { get; set; } = DateTime.UtcNow;
+    public Property Property { get; set; } = null!;
 }

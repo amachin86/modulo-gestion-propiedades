@@ -20,12 +20,12 @@ public class PropertiesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetProperties()
     {
-        var result = await _propertyService.GetAllPropertiesAsync();
+        var result = await _propertyService.GetPropertiesAsync();
         return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetProperty(Guid id)
+    public async Task<IActionResult> GetProperty(int id)
     {
         var result = await _propertyService.GetPropertyByIdAsync(id);
 
@@ -43,7 +43,7 @@ public class PropertiesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProperty(Guid id, [FromBody] UpdatePropertyDto dto)
+    public async Task<IActionResult> UpdateProperty(int id, [FromBody] UpdatePropertyDto dto)
     {
         var result = await _propertyService.UpdatePropertyAsync(id, dto);
 
@@ -54,7 +54,7 @@ public class PropertiesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProperty(Guid id)
+    public async Task<IActionResult> DeleteProperty(int id)
     {
         await _propertyService.DeletePropertyAsync(id);
         return NoContent();

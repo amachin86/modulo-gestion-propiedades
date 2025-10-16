@@ -1,32 +1,27 @@
-using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
 namespace PropertyManagement.Application.DTOs;
 
 public class UpdatePropertyDto
 {
+    [Required]
+    [MaxLength(200)]
     public string Name { get; set; } = string.Empty;
+
+    [Required]
     public string Description { get; set; } = string.Empty;
-    public Guid HostId { get; set; }
-    public string Status { get; set; } = string.Empty;
-}
 
-public class UpdatePropertyDtoValidator : AbstractValidator<UpdatePropertyDto>
-{
-    public UpdatePropertyDtoValidator()
-    {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Name is required")
-            .MaximumLength(200).WithMessage("Name must not exceed 200 characters");
+    [Required]
+    [MaxLength(500)]
+    public string Location { get; set; } = string.Empty;
 
-        RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters");
+    [Required]
+    [Range(0.01, double.MaxValue)]
+    public decimal PricePerNight { get; set; }
 
-        RuleFor(x => x.HostId)
-            .NotEmpty().WithMessage("HostId is required");
+    [Required]
+    public string Status { get; set; } = "Active"; // Active, Inactive
 
-        RuleFor(x => x.Status)
-            .NotEmpty().WithMessage("Status is required")
-            .Must(status => new[] { "Available", "Occupied", "Maintenance" }.Contains(status))
-            .WithMessage("Status must be one of: Available, Occupied, Maintenance");
-    }
+    [Required]
+    public int HostId { get; set; }
 }

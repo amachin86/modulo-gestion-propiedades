@@ -5,29 +5,17 @@ namespace PropertyManagement.Domain.Entities;
 
 public class Property
 {
-    [Key]
-    public Guid Id { get; set; }
-
-    [Required]
-    [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
-
-    [MaxLength(500)]
-    public string Description { get; set; } = string.Empty;
-
-    [Required]
-    public Guid HostId { get; set; }
-
-    [ForeignKey(nameof(HostId))]
-    public Host Host { get; set; } = null!;
-
-    [Required]
-    [MaxLength(50)]
-    public string Status { get; set; } = "Available"; // Available, Occupied, Maintenance
-
+    public int Id { get; set; }
+    public int HostId { get; set; }
+    public string Name { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string Location { get; set; } = null!;
+    public decimal PricePerNight { get; set; }
+    public string Status { get; set; } = "Active"; // Active | Inactive
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 
-    // Navigation property
+    public Host Host { get; set; } = null!;
+    public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     public ICollection<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
 }

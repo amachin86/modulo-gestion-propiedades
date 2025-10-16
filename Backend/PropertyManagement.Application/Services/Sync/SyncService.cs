@@ -12,7 +12,7 @@ public class SyncService : ISyncService
         _mediator = mediator;
     }
 
-    public async Task SyncPropertyAsync(Guid propertyId, string action)
+    public async Task SyncPropertyAsync(int propertyId, string action)
     {
         var command = new SyncPropertyCommand
         {

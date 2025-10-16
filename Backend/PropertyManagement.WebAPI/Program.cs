@@ -102,7 +102,9 @@ builder.Services.AddAutoMapper(typeof(PropertyManagement.Application.Mappings.Ma
 
 #region Repositories & UnitOfWork
 builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
+builder.Services.AddScoped<IHostRepository, HostRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IDomainEventRepository, DomainEventRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 #endregion
@@ -111,6 +113,22 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<
     PropertyManagement.Application.Services.Properties.IPropertyService,
     PropertyManagement.Application.Services.Properties.PropertyService>();
+
+builder.Services.AddScoped<
+    PropertyManagement.Application.Services.Hosts.IHostService,
+    PropertyManagement.Application.Services.Hosts.HostService>();
+
+builder.Services.AddScoped<
+    PropertyManagement.Application.Services.Users.IUserService,
+    PropertyManagement.Application.Services.Users.UserService>();
+
+builder.Services.AddScoped<
+    PropertyManagement.Application.Services.Bookings.IBookingService,
+    PropertyManagement.Application.Services.Bookings.BookingService>();
+
+builder.Services.AddScoped<
+    PropertyManagement.Application.Services.DomainEvents.IDomainEventService,
+    PropertyManagement.Application.Services.DomainEvents.DomainEventService>();
 
 builder.Services.AddScoped<
     PropertyManagement.Application.Services.Auth.IAuthService,
