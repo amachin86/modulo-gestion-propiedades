@@ -31,7 +31,7 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost]
+  /*  [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto)
     {
         var user = await _userService.CreateUserAsync(createUserDto);
@@ -50,5 +50,5 @@ public class UsersController : ControllerBase
     {
         await _userService.DeleteUserAsync(id);
         return NoContent();
-    }
+    }*/
 }
