@@ -46,13 +46,13 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthResponseDto>
         {
             Token = token,
             ExpiresAt = DateTime.UtcNow.AddHours(1),
-            User = new UserDto
+           /* User = new UserDto
             {
                 Id = user.Id,
                 Username = user.Username,
                 Email = user.Email,
                 Role = user.Role
-            }
+            }*/
         };
     }
 

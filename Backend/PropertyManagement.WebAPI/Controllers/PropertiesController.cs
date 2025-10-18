@@ -18,9 +18,9 @@ public class PropertiesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetProperties()
+    public async Task<IActionResult> GetProperties([FromQuery] PropertyQueryParameters query)
     {
-        var result = await _propertyService.GetPropertiesAsync();
+        var result = await _propertyService.GetPropertiesAsync(query.Name, query.HostId, query.Status, query.PageNumber, query.PageSize);
         return Ok(result);
     }
 

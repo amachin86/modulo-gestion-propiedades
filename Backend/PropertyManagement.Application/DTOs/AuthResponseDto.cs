@@ -6,5 +6,5 @@ public class AuthResponseDto
     public string Username { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
     public DateTime ExpiresAt { get; set; }
-    public UserDto User { get; set; } = new();
+   // public UserDto User { get; set; } = new();
 }

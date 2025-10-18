@@ -25,7 +25,7 @@ public class PropertyDto
     public string Status { get; set; } = "Active"; // Active, Inactive
 
     public int HostId { get; set; }
-    public string? HostName { get; set; }
+    //public string? HostName { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 }

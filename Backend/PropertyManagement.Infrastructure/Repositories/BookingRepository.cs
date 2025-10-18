@@ -18,6 +18,6 @@ public class BookingRepository : Repository<Booking>, IBookingRepository
 
     public async Task<IEnumerable<Booking>> GetByUserIdAsync(int userId)
     {
-        return await _context.Bookings.Where(b => b.UserId == userId).ToListAsync();
+        throw new NotImplementedException("UserId property removed from Booking entity.");
     }
 }

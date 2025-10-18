@@ -52,6 +52,10 @@ public class UnitOfWork : IUnitOfWork
             }
             return (IRepository<T>)_domainEventRepository;
         }
+        else if (typeof(T) == typeof(Booking))
+        {
+            return (IRepository<T>)new BookingRepository(_context);
+        }
 
         throw new ArgumentException($"Repository for type {typeof(T).Name} is not supported.");
     }
