@@ -34,7 +34,7 @@ public class DomainEventService : IDomainEventService
 
         if (occurredAt.HasValue)
         {
-            domainEvents = domainEvents.Where(de => de.OccurredAt.Date == occurredAt.Value.Date);
+            domainEvents = domainEvents.Where(de => de.CreatedAt.Date == occurredAt.Value.Date);
         }
 
         // Apply pagination
@@ -59,7 +59,6 @@ public class DomainEventService : IDomainEventService
     public async Task<DomainEventDto> CreateDomainEventAsync(DomainEventDto domainEventDto)
     {
         var domainEvent = _mapper.Map<DomainEvent>(domainEventDto);
-        domainEvent.OccurredAt = DateTime.UtcNow;
 
         var domainEventRepository = _unitOfWork.Repository<DomainEvent>();
         await domainEventRepository.AddAsync(domainEvent);

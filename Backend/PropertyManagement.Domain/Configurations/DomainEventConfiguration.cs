@@ -15,8 +15,8 @@ public class DomainEventConfiguration : IEntityTypeConfiguration<DomainEvent>
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(de => de.EventData)
-            .HasMaxLength(4000);
+        builder.Property(de => de.PayloadJSON)
+            .IsRequired();
 
         builder.HasOne(de => de.Property)
             .WithMany(p => p.DomainEvents)

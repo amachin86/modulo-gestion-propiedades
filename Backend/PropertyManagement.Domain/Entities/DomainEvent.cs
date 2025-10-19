@@ -9,7 +9,6 @@ public class DomainEvent
     public int PropertyId { get; set; }
     public string EventType { get; set; } = null!;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public string EventData { get; set; } = null!;
-    public DateTime OccurredAt { get; set; } = DateTime.UtcNow;
+    public string PayloadJSON { get; set; } = null!;
     public Property Property { get; set; } = null!;
 }

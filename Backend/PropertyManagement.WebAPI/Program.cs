@@ -9,6 +9,9 @@ using PropertyManagement.Domain.Interfaces;
 using PropertyManagement.Infrastructure;
 using PropertyManagement.Infrastructure.Data;
 using PropertyManagement.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Diagnostics;
+using CourseRobot.WebApi.ExceptionHandler;
+using CourseRobot.WebApi;
 
 // Crear el builder de la aplicación
 var builder = WebApplication.CreateBuilder(args);
@@ -88,7 +91,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 #region Database - Entity Framework
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 #endregion
 
 #region MediatR
@@ -139,6 +142,10 @@ builder.Services.AddScoped<
     PropertyManagement.Application.Services.Sync.SyncService>();
 #endregion
 
+// Register the custom exception handler 
+builder.Services.AddSingleton<IExceptionHandler, CustomExceptionHandler>(); // Add this line
+builder.Services.AddSingleton<IExceptionHandler, NoImplementedExceptionHandler>(); // Add this line
+
 // Construir la aplicación
 var app = builder.Build();
 
@@ -157,6 +164,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Use the exception handler middleware
+app.UseExceptionHandler(_ => { });
 
 app.MapControllers();
 #endregion

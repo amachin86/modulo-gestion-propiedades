@@ -16,7 +16,5 @@ public class DomainEventDto
     public DateTime CreatedAt { get; set; }
 
     [MaxLength(4000)]
-    public string EventData { get; set; } = string.Empty;
-
-    public DateTime OccurredAt { get; set; }
+    public string PayloadJSON { get; set; } = string.Empty;
 }

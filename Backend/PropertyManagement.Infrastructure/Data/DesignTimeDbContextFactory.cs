@@ -18,7 +18,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<Applicatio
 
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-        builder.UseNpgsql(connectionString);
+        builder.UseSqlServer(connectionString);
 
         return new ApplicationDbContext(builder.Options);
     }

@@ -24,8 +24,7 @@ public class SyncPropertyCommandHandler : IRequestHandler<SyncPropertyCommand, D
         {
             PropertyId = request.PropertyId,
             EventType = request.Action,
-            OccurredAt = DateTime.UtcNow,
-            EventData = string.Empty, // No details in this command
+            PayloadJSON = "{}", // Empty JSON object for now
             CreatedAt = DateTime.UtcNow
         };
 
