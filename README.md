@@ -38,12 +38,12 @@ The solution is divided into four main projects:
 1. Clone the repository.
 2. Update the connection string in `appsettings.json` in the WebAPI project.
 3. Run database migrations:
-   Move to PropertyManagement.Infrastructure
+   Move to Backend/PropertyManagement.Infrastructure
    ```
    dotnet ef database update 
    ```
 4. Build and run the WebAPI project:
-   Move to /PropertyManagement.WebAPI
+   Move to Backend/PropertyManagement.WebAPI
    ```
    dotnet run 
    ```
@@ -109,10 +109,8 @@ This project is licensed under the MIT License.
 
 ## References
 
-- [How to Write a Good README File](https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/)
 - [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [CQRS Pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
 - [FluentValidation](https://fluentvalidation.net/)
-- [Serilog](https://serilog.net/)
 - [Swagger/OpenAPI](https://swagger.io/specification/)
